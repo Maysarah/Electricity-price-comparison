@@ -30,11 +30,13 @@ class TariffValidatorTest extends TestCase
      *
      * @return array
      */
-    public static function consumptionDataProvider()
+    public static function consumptionDataProvider(): array
     {
+        // to add consumption for non-integer
         return [
             'positive consumption' => [2000, null],
             'negative consumption' => [-2000, ['consumption' => ['The consumption field must be at least 0.']]],
+            'string consumption' => ["Two Thousand", ['consumption' => ['The consumption field must be an integer.']]],
         ];
     }
 }

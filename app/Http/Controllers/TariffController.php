@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Tariffs\TariffCalculatorService;
 use App\Services\Tariffs\TariffValidator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TariffController extends Controller
@@ -19,11 +20,17 @@ class TariffController extends Controller
         $this->tariffValidator = $tariffValidator;
     }
 
-    public function compareTariffs(Request $request): \Illuminate\Http\JsonResponse
+    /**
+     * Compare tariffs based on the provided consumption.
+     *
+     * @param Request $request The HTTP request containing the consumption data.
+     * @return JsonResponse The JSON response containing the comparison results.
+     */
+    public function compareTariffs(Request $request): JsonResponse
     {
-        $validationErrors = $this->tariffValidator->validate($request->all());
-        if ($validationErrors) {
-            return response()->json(['error' => $validationErrors], 400);
+        $validationResult = $this->tariffValidator->validate($request->all());
+        if ($validationResult) {
+            return response()->json(['error' => $validationResult], 400);
         }
 
         $consumption = $request->input('consumption');

@@ -12,19 +12,20 @@ class TariffProductRepositoryTest extends TestCase
 {
     public function testGetAll()
     {
-
+        // Create some mocked products
         $mockedProducts = new Collection([
             new TariffProduct(['name' => 'Product A', 'annual_cost' => 800]),
             new TariffProduct(['name' => 'Product B', 'annual_cost' => 900]),
         ]);
 
-        $repository = Mockery::mock(TariffProductRepository::class);
-        $repository->shouldReceive('getAll')->andReturn($mockedProducts);
+        // Mock the repository and specify the behavior
+        $repositoryMock = Mockery::mock(TariffProductRepository::class);
+        $repositoryMock->shouldReceive('getAll')->andReturn($mockedProducts);
 
+        // Call the method under test
+        $products = $repositoryMock->getAll();
 
-        $products = $repository->getAll();
-
-
+        // Perform assertions
         $this->assertInstanceOf(Collection::class, $products);
         $this->assertCount(2, $products);
         foreach ($products as $product) {

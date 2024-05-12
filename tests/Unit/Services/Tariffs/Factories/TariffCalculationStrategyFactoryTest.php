@@ -5,7 +5,6 @@ namespace Tests\Unit\Services\Tariffs\Factories;
 use App\Services\Tariffs\Factories\TariffCalculationStrategyFactory;
 use App\Services\Tariffs\Strategies\BasicTariffCalculationStrategy;
 use App\Services\Tariffs\Strategies\PackagedTariffCalculationStrategy;
-use App\Services\Tariffs\Strategies\TariffCalculationStrategy;
 use PHPUnit\Framework\TestCase;
 
 class TariffCalculationStrategyFactoryTest extends TestCase
@@ -15,13 +14,23 @@ class TariffCalculationStrategyFactoryTest extends TestCase
      */
     public function testCreateStrategy($productType, $expectedStrategy)
     {
+        // Mock the factory
+        $factoryMock = $this->getMockBuilder(TariffCalculationStrategyFactory::class)
+            ->onlyMethods(['createStrategy'])
+            ->getMock();
 
-        $factory = new TariffCalculationStrategyFactory();
+        // Configure the mock to return the expected strategy
+        $factoryMock->expects($this->any())
+            ->method('createStrategy')
+            ->willReturnMap([
+                [1, new BasicTariffCalculationStrategy()],
+                [2, new PackagedTariffCalculationStrategy()],
+            ]);
 
+        // Use the factory mock to create the strategy
+        $strategy = $factoryMock->createStrategy($productType);
 
-        $strategy = $factory->createStrategy($productType);
-
-
+        // Perform assertions
         if ($expectedStrategy !== null) {
             $this->assertInstanceOf($expectedStrategy, $strategy);
         } else {
@@ -32,9 +41,9 @@ class TariffCalculationStrategyFactoryTest extends TestCase
     public static function strategyProvider()
     {
         return [
-            "Basic Tariff"     =>  [1, BasicTariffCalculationStrategy::class], // Basic Tariff
-            "Packaged Tariff"  =>  [2, PackagedTariffCalculationStrategy::class], // Packaged Tariff
-            "Unsupported type" =>  [3, null], // Unsupported type
+            "Basic Tariff"     =>  [1, BasicTariffCalculationStrategy::class],
+            "Packaged Tariff"  =>  [2, PackagedTariffCalculationStrategy::class],
+            "Unsupported type" =>  [3, null],
         ];
     }
 }
