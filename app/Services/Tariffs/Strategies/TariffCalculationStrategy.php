@@ -1,5 +1,5 @@
 <?php
-namespace App\Interfaces\Strategies;
+namespace App\Services\Tariffs\Strategies;
 
 interface TariffCalculationStrategy
 {

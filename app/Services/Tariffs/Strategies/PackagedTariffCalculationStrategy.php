@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Classes\Strategies;
-
-use App\Interfaces\Strategies\TariffCalculationStrategy;
+namespace App\Services\Tariffs\Strategies;
 
 class PackagedTariffCalculationStrategy implements TariffCalculationStrategy
 {

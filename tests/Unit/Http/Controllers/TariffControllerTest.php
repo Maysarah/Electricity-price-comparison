@@ -1,45 +1,64 @@
 <?php
 
-namespace Http\Controllers;
+namespace Tests\Unit\Http\Controllers;
 
 use App\Http\Controllers\TariffController;
-use App\Models\TariffProduct;
-use App\Repositories\TariffProductRepository;
-use App\Services\TariffCalculator;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Services\Tariffs\TariffCalculatorService;
+use App\Services\Tariffs\TariffValidator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 class TariffControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
-    public function testCompareTariffsValidConsumption()
+    /**
+     * @dataProvider consumptionDataProvider
+     */
+    public function testCompareTariffs($consumption, $expectedResponse)
     {
         // Arrange
-        $tariffProducts = new \Illuminate\Database\Eloquent\Collection([
-            new TariffProduct(['name' => 'Product A', 'annual_cost' => 800]),
-            new TariffProduct(['name' => 'Product B', 'annual_cost' => 900]),
-        ]);
+        $request = new Request(['consumption' => $consumption]);
 
-        $repository = $this->createMock(TariffProductRepository::class);
-        $repository->expects($this->once())->method('getAll')->willReturn($tariffProducts);
+        $calculatorMock = $this->createMock(TariffCalculatorService::class);
+        $calculatorMock->expects($this->once())
+            ->method('compareTariffs')
+            ->with($consumption)
+            ->willReturn($expectedResponse);
 
-        // Mocking the tariff calculator
-        $calculator = $this->createMock(TariffCalculator::class);
-        $calculator->expects($this->exactly(2))->method('compareTariffs')->willReturn(['mocked' => 'result']);
+        $validatorMock = $this->createMock(TariffValidator::class);
+        $validatorMock->expects($this->once())
+            ->method('validate')
+            ->with(['consumption' => $consumption])
+            ->willReturn(null);
 
-        // Create an instance of the controller
-        $controller = new TariffController($calculator, $repository);
+        $controller = new TariffController($calculatorMock, $validatorMock);
 
         // Act
-        $request = new Request(['consumption' => 1000]);
         $response = $controller->compareTariffs($request);
 
         // Assert
         $this->assertEquals(200, $response->getStatusCode());
-        // Add more assertions as needed
+        $this->assertEquals($expectedResponse, $response->getData(true));
+    }
+
+    public static function consumptionDataProvider()
+    {
+        return [
+            'positive consumption'=> [
+                3500,
+                [
+                    ['name' => 'Product B', 'annual_cost' => 800, 'status' => 'available'],
+                    ['name' => 'Product A', 'annual_cost' => 830, 'status' => 'available'],
+                ]
+            ],
+            'negative consumption'=> [
+                -100, // Negative consumption value
+                [
+                    'error' => [
+                        'consumption' => ['The consumption field must be at least 0.']
+                    ]
+                ]
+            ],
+            // Add more test cases with different consumption values and expected responses
+        ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Factories;
+namespace App\Services\Tariffs\Factories;
 
-use App\Classes\Strategies\BasicTariffCalculationStrategy;
-use App\Classes\Strategies\PackagedTariffCalculationStrategy;
-use App\Interfaces\Strategies\TariffCalculationStrategy;
+use App\Services\Tariffs\Strategies\BasicTariffCalculationStrategy;
+use App\Services\Tariffs\Strategies\PackagedTariffCalculationStrategy;
+use App\Services\Tariffs\Strategies\TariffCalculationStrategy;
 
 class TariffCalculationStrategyFactory
 {
