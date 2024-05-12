@@ -15,13 +15,13 @@ class TariffCalculationStrategyFactoryTest extends TestCase
      */
     public function testCreateStrategy($productType, $expectedStrategy)
     {
-        // Arrange
+
         $factory = new TariffCalculationStrategyFactory();
 
-        // Act
+
         $strategy = $factory->createStrategy($productType);
 
-        // Assert
+
         if ($expectedStrategy !== null) {
             $this->assertInstanceOf($expectedStrategy, $strategy);
         } else {

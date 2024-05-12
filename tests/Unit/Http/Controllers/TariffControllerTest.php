@@ -15,7 +15,7 @@ class TariffControllerTest extends TestCase
      */
     public function testCompareTariffs($consumption, $expectedResponse)
     {
-        // Arrange
+
         $request = new Request(['consumption' => $consumption]);
 
         $calculatorMock = $this->createMock(TariffCalculatorService::class);
@@ -32,10 +32,9 @@ class TariffControllerTest extends TestCase
 
         $controller = new TariffController($calculatorMock, $validatorMock);
 
-        // Act
+
         $response = $controller->compareTariffs($request);
 
-        // Assert
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals($expectedResponse, $response->getData(true));
     }

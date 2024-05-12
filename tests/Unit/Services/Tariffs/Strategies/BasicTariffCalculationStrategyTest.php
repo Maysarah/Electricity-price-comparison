@@ -10,7 +10,7 @@ class BasicTariffCalculationStrategyTest extends TestCase
 {
     public function testCalculateAnnualCost()
     {
-        // Arrange
+
         $strategy = new BasicTariffCalculationStrategy();
         $consumption = 2000; // kWh
         $product = new TariffProduct([
@@ -18,10 +18,10 @@ class BasicTariffCalculationStrategyTest extends TestCase
             'additional_kwh_cost' => 30, // in percentage
         ]);
 
-        // Act
+
         $annualCost = $strategy->calculateAnnualCost($consumption, $product);
 
-        // Assert
+
         // Base cost per year = base cost per month * 12
         // Additional consumption cost = consumption * (additional kWh cost / 100)
         // Total annual cost = base cost per year + additional consumption cost

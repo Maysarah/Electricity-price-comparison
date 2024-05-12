@@ -13,7 +13,7 @@ class PackagedTariffCalculationStrategyTest extends TestCase
      */
     public function testCalculateAnnualCost($consumption, $baseCost, $includedKwh, $additionalKwhCost, $expectedResult)
     {
-        // Arrange
+
         $strategy = new PackagedTariffCalculationStrategy();
         $product = new TariffProduct([
             'base_cost' => $baseCost, // per year
@@ -21,10 +21,10 @@ class PackagedTariffCalculationStrategyTest extends TestCase
             'additional_kwh_cost' => $additionalKwhCost, // in percentage
         ]);
 
-        // Act
+
         $annualCost = $strategy->calculateAnnualCost($consumption, $product);
 
-        // Assert
+
         $this->assertEquals($expectedResult, $annualCost);
     }
 
