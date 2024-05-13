@@ -32,14 +32,14 @@ class TariffsSeeder extends Seeder
 //                'type' => 3,
 //                'base_cost' => 800,
 //                'additional_kwh_cost' => 30,
-//                'included_kwh' => 5000,
+//                'included_kwh' => 4500,
 //            ],
 //            [
 //                'name' => 'Product D',
 //                'type' => 4,
 //                'base_cost' => 800,
 //                'additional_kwh_cost' => 30,
-//                'included_kwh' => 6000,
+//                'included_kwh' => 5000,
 //            ]
         ];
 
