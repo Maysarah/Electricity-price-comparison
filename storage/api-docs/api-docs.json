@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Your API Title",
-        "description": "Description of your API",
+        "title": "Electricity Price Comparison API",
+        "description": "The Electricity Price Comparison API is a RESTful service designed to facilitate the comparison of electricity tariffs based on provided consumption data. By leveraging this API, users can obtain insights into various electricity tariffs, aiding in making informed decisions regarding energy consumption and cost management.",
         "version": "1.0.0"
     },
     "paths": {
