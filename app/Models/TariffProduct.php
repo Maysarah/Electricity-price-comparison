@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class TariffProduct extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'type',
+        'base_cost',
+        'additional_kwh_cost',
+        'included_kwh',
+    ];
 }

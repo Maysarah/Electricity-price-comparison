@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\TariffProduct;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TariffsSeeder extends Seeder
 {
@@ -29,20 +27,20 @@ class TariffsSeeder extends Seeder
                 'additional_kwh_cost' => 30,
                 'included_kwh' => 4000,
             ],
-            [
-                'name' => 'Product C',
-                'type' => 3,
-                'base_cost' => 800,
-                'additional_kwh_cost' => 30,
-                'included_kwh' => 5000,
-            ],
-            [
-                'name' => 'Product D',
-                'type' => 4,
-                'base_cost' => 800,
-                'additional_kwh_cost' => 30,
-                'included_kwh' => 6000,
-            ]
+//            [
+//                'name' => 'Product C',
+//                'type' => 3,
+//                'base_cost' => 800,
+//                'additional_kwh_cost' => 30,
+//                'included_kwh' => 5000,
+//            ],
+//            [
+//                'name' => 'Product D',
+//                'type' => 4,
+//                'base_cost' => 800,
+//                'additional_kwh_cost' => 30,
+//                'included_kwh' => 6000,
+//            ]
         ];
 
         foreach ($data as $tariffData) {
