@@ -35,7 +35,7 @@ The Electricity Price Comparison API is a RESTful service designed to facilitate
        DB_CONNECTION=mysql \
        DB_HOST=mysql \
        DB_PORT=3306 \
-       DB_DATABASE=electrical_usage_tracker_db \ this is an example, You choose your own
+       DB_DATABASE=electrical_usage_tracker_db \ this is an example, You can choose your own
        DB_USERNAME=root \
        DB_PASSWORD=password
    
