@@ -18,7 +18,13 @@ class TariffCalculatorService
         $this->productRepository = $productRepository;
     }
 
-    public function compareTariffs($consumption): array
+    /**
+     * Compares tariffs based on the provided consumption and returns the results.
+     *
+     * @param int $consumption The consumption value for which to compare tariffs.
+     * @return array The array of tariff comparison results.
+     */
+    public function compareTariffs(int $consumption): array
     {
         $tariffProducts = $this->productRepository->getAll();
         $results = [];
@@ -37,38 +43,39 @@ class TariffCalculatorService
                 $results[] = ['name' => $product->name, 'annual_cost' => $annualCost, 'status' => 'available'];
             }
         }
-
         return $this->sortResults($results);
     }
 
-
+    /**
+     * Sorts the results array with non-null 'annual_cost' entries in ascending order,
+     * with null entries placed at the end.
+     *
+     * @param array $results The array of results to be sorted.
+     * @return array The sorted array of results.
+     */
     private function sortResults(array $results): array
     {
+        // Separate entries with null and non-null annual_cost
         $nullCostEntries = [];
         $nonNullCostEntries = [];
 
-        // Separate entries with null annual_cost and non-null annual_cost
         foreach ($results as $entry) {
-            if (array_key_exists('annual_cost', $entry)) {
-                if ($entry['annual_cost'] === null) {
-                    $nullCostEntries[] = $entry;
-                } else {
-                    $nonNullCostEntries[] = $entry;
-                }
+            if (isset($entry['annual_cost'])) {
+                $nonNullCostEntries[] = $entry;
             } else {
-                // If 'annual_cost' key doesn't exist, move it to the end
                 $nullCostEntries[] = $entry;
             }
         }
 
-        // Sort entries with non-null annual_cost based on 'annual_cost'
+        // Sort non-null entries based on 'annual_cost' in ascending order
         usort($nonNullCostEntries, function ($a, $b) {
             return $a['annual_cost'] <=> $b['annual_cost'];
         });
 
-        // Merge arrays (null entries followed by sorted non-null entries)
+        // Merge sorted non-null entries with null entries
         return array_merge($nonNullCostEntries, $nullCostEntries);
     }
+
 
 
 }

@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class TariffProductRepositoryTest extends TestCase
 {
-    public function testGetAll()
+    public function testGetAllReturnsCollectionOfTariffProducts()
     {
         // Create some mocked products
         $mockedProducts = new Collection([

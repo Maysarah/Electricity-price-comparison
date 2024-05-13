@@ -2,9 +2,18 @@
 
 namespace App\Services\Tariffs\Strategies;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class BasicTariffCalculationStrategy implements TariffCalculationStrategy
 {
-    public function calculateAnnualCost($consumption, $product): float|int
+    /**
+     * Calculates the annual cost for a given consumption and product.
+     *
+     * @param int $consumption The consumption value in kWh.
+     * @param mixed $product The product for which to calculate the annual cost.
+     * @return float|int The calculated annual cost.
+     */
+   public function calculateAnnualCost($consumption, $product): float|int
     {
         // Convert the base cost from per month to per year
         $baseCostPerYear = $product->base_cost * 12;

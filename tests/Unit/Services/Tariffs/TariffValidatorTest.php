@@ -3,7 +3,6 @@
 namespace Tests\Unit\Services\Tariffs;
 
 use App\Services\Tariffs\TariffValidator;
-use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 class TariffValidatorTest extends TestCase
