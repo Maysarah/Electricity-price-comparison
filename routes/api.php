@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/compare-tariffs', [TariffController::class, 'compareTariffs']);
+Route::get('/electricity-tariffs', [TariffController::class, 'compareTariffs']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
